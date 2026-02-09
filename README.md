@@ -23,6 +23,28 @@ You need to create an app on https://developer.spotify.com/ and get `clientId`. 
 - `npm start`
 - Navigate to `http://localhost:<PORT>`
 
+## Run in production with Docker
+
+Build and run with Docker Compose:
+
+```bash
+docker compose up -d --build
+```
+
+> Note: `docker compose` builds this app from the local repository using generic base images (`node:20-alpine` for build and `nginx:alpine` for runtime). No prebuilt app image is required.
+
+App will be available at: `http://localhost:8080`.
+
+Useful commands:
+
+```bash
+# stop containers
+docker compose down
+
+# rebuild image and restart
+docker compose up -d --build
+```
+
 ## Changelog
 
 ### 2.7 (2024/01/22)
