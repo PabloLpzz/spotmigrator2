@@ -1,0 +1,10 @@
+services:
+  trikatuka:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spotmigrator2:latest
+    container_name: spotmigrator2
+    ports:
+      - "8080:80"
+    restart: unless-stopped
