@@ -9,15 +9,122 @@
     <link rel="stylesheet" href="css/uikit.min.css">
 
     <style>
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #1db95422 0%, #f6f8fb 45%, #eef2f7 100%);
+            color: #1f2937;
+        }
+
+        .tr-navbar {
+            background: linear-gradient(90deg, #101827 0%, #1f2937 100%);
+            box-shadow: 0 8px 30px rgba(16, 24, 39, 0.32);
+        }
+
+        .tr-app-shell {
+            margin-top: 22px;
+            padding: 18px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+        }
+
+        .tr-user-panel {
+            border-radius: 12px;
+            border: 1px solid #e6e8ed;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-height: 86px !important;
+            padding: 14px 16px;
+            position: relative;
+        }
+
+        .tr-user-panel img {
+            border-radius: 9999px;
+            object-fit: cover;
+            border: 2px solid #d1fae5;
+            flex-shrink: 0;
+        }
+
+        .tr-user-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .tr-user-name {
+            font-weight: 600;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .tr-auth-link {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #fff !important;
+            background: linear-gradient(90deg, #1db954, #16a34a);
+            border-radius: 999px;
+            padding: 4px 12px;
+            text-decoration: none;
+            box-shadow: 0 3px 8px rgba(29, 185, 84, 0.3);
+        }
+
+        .tr-auth-link:hover {
+            color: #fff !important;
+            text-decoration: none;
+            filter: brightness(1.05);
+        }
+
         .tr-panel-box-title {
             position: absolute;
             bottom: 0px;
             right: 5px;
         }
 
+        .uk-tab {
+            border-bottom-color: #d1d5db;
+        }
+
+        .uk-tab>li>a {
+            border-radius: 10px 10px 0 0;
+            transition: all .2s ease;
+            font-weight: 600;
+        }
+
+        .uk-tab>li.uk-active>a {
+            background: #1db954;
+            color: #fff;
+            border-color: #1db954;
+        }
+
         .uk-tab>li>a,
         .uk-tab>li>a:hover {
             color: #444;
+        }
+
+        .uk-button {
+            border-radius: 8px;
+        }
+
+        .uk-table {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .uk-table tr:hover {
+            background: #f0fdf4 !important;
         }
 
         .uk-navbar-brand a {
@@ -36,7 +143,7 @@
 
 <body>
     <div id="app" data-uk-observe style="visibility: hidden">
-        <nav class="uk-navbar" style="background: #292929">
+        <nav class="uk-navbar tr-navbar">
             <div class="uk-container uk-container-center">
                 <span class="uk-navbar-brand uk-float-right"><a class="tr-help" href="#/help"><i
                             class="uk-icon-question-circle"></i></a></span>
@@ -46,20 +153,22 @@
             </div>
         </nav>
         <div class="uk-container uk-container-center">
-            <div class="uk-margin-top">
+            <div class="uk-margin-top tr-app-shell">
                 <div class="uk-grid uk-margin-bottom" ng-controller="LoginCtrl">
                     <div class="uk-width-1-2">
-                        <div class="uk-panel uk-panel-box" style="min-height: 50px">
-                            <img ng-src="{{user1.data.images[0].url}}" alt="" style="max-height: 50px; max-width: 50px;"
+                        <div class="uk-panel uk-panel-box tr-user-panel">
+                            <img ng-src="{{user1.data.images[0].url}}" alt="" style="max-height: 54px; max-width: 54px;"
                                 ng-if="user1.data.images[0].url">
                             <img src="images/profile.svg" alt="Profile picture"
-                                style="max-height: 50px; max-width: 50px;"
+                                style="max-height: 54px; max-width: 54px;"
                                 ng-if="user1.data && !user1.data.images[0].url">
-                            <span class="uk-margin-small-left">{{user1.data.display_name || user1.data.id}}</span>
-                            <span ng-hide="viewDisabled">
-                                <a href="" ng-click="user1.login()" ng-if="!user1.authData">sign in</a>
-                                <a href="" ng-click="user1.logout()" ng-if="user1.authData">sign out</a>
-                            </span>
+                            <div class="tr-user-meta">
+                                <span class="tr-user-name">{{user1.data.display_name || user1.data.id || 'Old user'}}</span>
+                                <span ng-hide="viewDisabled">
+                                    <a class="tr-auth-link" href="" ng-click="user1.login()" ng-if="!user1.authData">Sign in</a>
+                                    <a class="tr-auth-link" href="" ng-click="user1.logout()" ng-if="user1.authData">Sign out</a>
+                                </span>
+                            </div>
 
                             <div class="tr-panel-box-title uk-text-muted"><i
                                     class="uk-icon-user uk-margin-small-right"></i>Old
@@ -68,20 +177,22 @@
                         </div>
                     </div>
                     <div class="uk-width-1-2">
-                        <div class="uk-panel uk-panel-box" style="min-height: 50px">
+                        <div class="uk-panel uk-panel-box tr-user-panel">
                             <div class="tr-panel-box-title uk-text-muted"><i
                                     class="uk-icon-user uk-margin-small-right"></i>New
                                 user
                             </div>
-                            <img ng-src="{{user2.data.images[0].url}}" alt="" style="max-height: 50px; max-width: 50px;"
+                            <img ng-src="{{user2.data.images[0].url}}" alt="" style="max-height: 54px; max-width: 54px;"
                                 ng-if="user2.data.images[0].url">
-                            <img src="images/profile.svg" alt="" style="max-height: 50px; max-width: 50px;"
+                            <img src="images/profile.svg" alt="" style="max-height: 54px; max-width: 54px;"
                                 ng-if="user2.data && !user2.data.images[0].url">
-                            <span class="uk-margin-small-left">{{user2.data.display_name || user2.data.id}}</span>
-                            <span ng-hide="viewDisabled">
-                                <a href="" ng-click="user2.login()" ng-if="!user2.authData">sign in</a>
-                                <a href="" ng-click="user2.logout()" ng-if="user2.authData">sign out</a>
-                            </span>
+                            <div class="tr-user-meta">
+                                <span class="tr-user-name">{{user2.data.display_name || user2.data.id || 'New user'}}</span>
+                                <span ng-hide="viewDisabled">
+                                    <a class="tr-auth-link" href="" ng-click="user2.login()" ng-if="!user2.authData">Sign in</a>
+                                    <a class="tr-auth-link" href="" ng-click="user2.logout()" ng-if="user2.authData">Sign out</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
