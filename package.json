@@ -2,7 +2,7 @@
   "name": "starter-node-angular",
   "scripts": {
     "build": "node_modules/.bin/grunt && rm -rf ./public && cp -r ./webapp ./public && cp config.prod.json ./public/config.json",
-    "start": "cp config.dev.json webapp/config.json && node_modules/.bin/grunt && http-server -p 8080 webapp"
+    "start": "cp config.dev.json webapp/config.json && node_modules/.bin/grunt && http-server -p 8080 -S -S -C certs/localhost.crt -K certs/localhost.key webapp"
   },
   "dependencies": {
     "keycloak-angular": "^16.0.1"

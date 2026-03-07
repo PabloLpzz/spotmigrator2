@@ -16,12 +16,19 @@ Project is based on `AngularJS 1.5`
 
 You need to create an app on https://developer.spotify.com/ and get `clientId`. You must also add `http://localhost:<PORT>/afterLogin` to the urls whitelist.
 
+Spotify API requires HTTPS for authentication so for local development generate self signed cert and put it in `certs` dir. For `CN` provide `localhost`
+
+```bash
+cd certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt
+```
+
 **How to run**
 - optionally change port in `package.json` in `start` command
 - set clientId in `config.dev.json`
 - `npm install`
 - `npm start`
-- Navigate to `http://localhost:<PORT>`
+- Navigate to `https://127.0.0.1:<PORT>`
 
 ## Run in production with Docker
 
@@ -50,6 +57,9 @@ docker compose up -d --build
 ```
 
 ## Changelog
+
+### 2.7.1 (2026/03/06)
+- Fixed atuhentication
 
 ### 2.7 (2024/01/22)
 - Added podcasts

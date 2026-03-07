@@ -15,10 +15,6 @@ angular.module('trikatuka2').service('AuthService', function (CLIENT_ID, REDIREC
         'user-follow-read',
         'user-follow-modify'].join('%20');
 
-    function openWindow(userType) {
-        window.open('login.html#userType=' + userType, '', "width=800, height=600, scrollbars=yes")
-    }
-
     this.authorize = async function authorize(userType) {
 
         var codeVerifier = generateRandomString(128);
@@ -53,7 +49,7 @@ angular.module('trikatuka2').service('AuthService', function (CLIENT_ID, REDIREC
         params.append('redirect_uri', REDIRECT_URI)
         params.append('code_challenge_method', 'S256')
         params.append('code_challenge', await generateCodeChallenge(codeVerifier))
-        params.append('state', userType + ':' + state)
+        params.append('state', userType + '_' + state)
 
         var url = 'https://accounts.spotify.com/authorize?' + params.toString() + '&scope=' + privileges;
 

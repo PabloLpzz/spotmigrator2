@@ -73,8 +73,8 @@
                 const params = url.searchParams
                 const code = params.get('code')
                 const returnedState = params.get('state')
-                const userType = returnedState?.split(':')[0]
-                const state = returnedState?.replace(userType + ':', '')
+                const userType = returnedState?.split('_')[0]
+                const state = returnedState?.replace(userType + '_', '')
                 return { code, userType, state }
             }
 
